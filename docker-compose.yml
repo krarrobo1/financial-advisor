@@ -8,6 +8,8 @@ services:
     build:
       context: ./api
     hostname: money1
+    volumes:
+      - ./db:/app/db
   ui:
     image: mm_ui_image
     container_name: mm_ui_container
@@ -18,4 +20,3 @@ services:
     build:
       context: ./ui
     hostname: money2
-    
