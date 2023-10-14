@@ -1,0 +1,21 @@
+version: "3"
+services:
+  api:
+    image: mm_api_image
+    container_name: mm_api_container 
+    ports:
+    - "8000:8000"
+    build:
+      context: ./api
+    hostname: money1
+  ui:
+    image: mm_ui_image
+    container_name: mm_ui_container
+    depends_on:
+    - "api"
+    ports:
+    - "8501:8501"
+    build:
+      context: ./ui
+    hostname: money2
+    

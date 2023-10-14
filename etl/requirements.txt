@@ -1,0 +1,14 @@
+pypdf
+tqdm
+langchain
+chromadb
+openai
+sentence-transformers
+unstructured
+unstructured[pdf]
+pymupdf
+pandas
+openpyxl
+boto3
+redis
+pysqlite3-binary
