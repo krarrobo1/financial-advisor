@@ -52,6 +52,8 @@ In order to enable modular development, scalability, and flexibilitywe've adopte
 # ETL
 The ETL process leverages both boto3 and Airflow. Boto3 is employed to retrieve documents from an AWS bucket, while Airflow orchestrates and schedules the ETL workflows. Documents, fetched in PDF format, are classified on a company-wise basis.
 
+**Note**: Executing the ETL is an expensive task, but don't worry we already uploaded all the needed documents here: https://drive.google.com/drive/folders/1ux8iF36QLuhNSFrAVbpu9wujqZ8XiayH just copy the contents of the downloaded folder into `.\db` directory.
+
 # API
 Our system integrates FastAPI for API development, enabling seamless interaction between the frontend and the AI-backed response generator.
 
