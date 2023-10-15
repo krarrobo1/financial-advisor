@@ -100,3 +100,4 @@ watchfiles==0.20.0
 websockets==11.0.3
 yarl==1.9.2
 zipp==3.17.0
+sentence-transformers

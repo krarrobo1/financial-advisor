@@ -16,7 +16,7 @@ from langchain.chains import RetrievalQA
 from langchain.memory import ConversationBufferWindowMemory
 from langchain.retrievers import ContextualCompressionRetriever
 from langchain.retrievers.document_compressors import LLMChainExtractor
-
+from langchain.embeddings import SentenceTransformerEmbeddings
 
 # Helper import
 from typing import List
@@ -57,25 +57,34 @@ def get_text_chunks(text):
 
 
 def load_vectorstore(text_chunks):
-    embeddings = OpenAIEmbeddings()
-    vectorstore = Chroma.from_texts(
-        texts=text_chunks, 
-        embedding=embeddings,
-        persist_directory="./db")
-    vectorstore.add_texts(texts=text_chunks)
+    
+    if os.path.exists('./db') and os.path.isdir('./db'):
+        sqlite_file = [file for file in os.listdir('./db') if file.endswith(".sqlite3") ]
+        if sqlite_file:
+            embeddings = SentenceTransformerEmbeddings(model_name='multi-qa-MiniLM-L6-cos-v1')
+            vectorstore = Chroma(
+                embedding_function=embeddings,
+                persist_directory="./db")
+            vectorstore.add_texts(texts=text_chunks)
+    else:
+        embeddings = SentenceTransformerEmbeddings(model_name='multi-qa-MiniLM-L6-cos-v1')
+        vectorstore = Chroma.from_texts(
+            texts=text_chunks,
+            embedding_function=embeddings,
+            persist_directory="./db")
     return True
 
 
 def get_vectorstore(search=False):
     if search == True:
-        embeddings = OpenAIEmbeddings()
+        embeddings = SentenceTransformerEmbeddings(model_name='multi-qa-MiniLM-L6-cos-v1')
         vectorstore = Chroma(
             persist_directory="./db", 
             embedding_function=embeddings,
         ).as_retriever(search_type = 'similarity', 
                     search_kwargs = {"k": 3})
     else:
-        embeddings = OpenAIEmbeddings()
+        embeddings = SentenceTransformerEmbeddings(model_name='multi-qa-MiniLM-L6-cos-v1')
         vectorstore = Chroma(
         persist_directory="./db", 
         embedding_function=embeddings)
